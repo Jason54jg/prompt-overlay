@@ -1,0 +1,7 @@
+{
+  "key.category.prompt-overlay.keybinds": "Prompt Overlay",
+
+  "key.prompt-overlay.accept": "Accept the Prompt",
+  "key.prompt-overlay.deny": "Deny the Prompt",
+  "key.prompt-overlay.dismiss": "Dismiss the Prompt"
+}

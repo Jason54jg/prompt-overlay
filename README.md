@@ -8,11 +8,12 @@ The project aims to provide a lightweight, intuitive way to interact with common
 
 ### Request types
 
-* [ ] Friend requests
+* [x] Friend requests
 * [ ] Party invites
 * [ ] Guild invites
 * [ ] SkyBlock trade requests
 * [ ] Duel requests
+* [x] Trophy Fish GG prompt
 
 ### Dialogs
 
@@ -22,7 +23,7 @@ The project aims to provide a lightweight, intuitive way to interact with common
 
 ### General
 
-* [ ] Configurable keybinds
+* [x] Configurable keybinds
 * [ ] Configurable appearance
 * [ ] Animations
 * [ ] (Sound effects)

@@ -3,6 +3,10 @@ package net.dungeonhub.promptoverlay
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator
 import net.dungeonhub.promptoverlay.config.Config
+import net.dungeonhub.promptoverlay.feature.ChatHandler
+import net.dungeonhub.promptoverlay.feature.OverlayFeature
+import net.dungeonhub.promptoverlay.overlays.FriendRequestOverlay
+import net.dungeonhub.promptoverlay.service.KeyMappingService
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands
@@ -36,5 +40,21 @@ object PromptOverlay : ClientModInitializer {
                     }
             )
         }
+
+        if (isDev) {
+            ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
+                dispatcher.register(
+                    ClientCommands.literal("pot")
+                        .executes {
+                            OverlayFeature.setOverlay(FriendRequestOverlay("Taubsie"))
+                            return@executes 1
+                        }
+                )
+            }
+        }
+
+        KeyMappingService.init()
+        OverlayFeature.init()
+        ChatHandler.init()
     }
 }

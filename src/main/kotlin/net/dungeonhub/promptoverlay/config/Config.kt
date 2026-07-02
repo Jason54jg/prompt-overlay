@@ -15,6 +15,7 @@ object Config : ConfigKt("$MOD_ID/config") {
     init {
         separator {
             title = "Thanks for using the Prompt Overlay Mod!"
+            description = "Please note that you have to configure the keybindings through the vanilla Minecraft Controls menu."
         }
 
         button {
