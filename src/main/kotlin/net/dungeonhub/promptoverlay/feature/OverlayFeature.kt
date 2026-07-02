@@ -74,6 +74,7 @@ object OverlayFeature {
         if (currentOverlay == null) return
 
         hidingOverlay = currentOverlay
+        currentOverlay = null
         animationStartTime = System.currentTimeMillis()
         isAnimatingIn = false
         isAnimatingOut = true
