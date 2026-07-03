@@ -11,7 +11,7 @@ object OverlayCategory : CategoryKt("$MOD_ID/overlay") {
 
     val overlayDisplayDuration by int("overlay_display_duration", 10) {
         name = Literal("Overlay Display Duration")
-        description = Literal("How long the prompt is displayed before being automatically dismissed.")
+        description = Literal("How long (in seconds) the prompt is displayed before being automatically dismissed.")
         range = 3..45
         slider = true
     }
@@ -24,6 +24,11 @@ object OverlayCategory : CategoryKt("$MOD_ID/overlay") {
     val partyColor by color("party_color", Color.BLUE.rgb) {
         name = Literal("Party Color")
         description = Literal("The color of the party invite overlay.")
+    }
+
+    val tradeColor by color("trade_color", Color(0x2BA801).rgb) {
+        name = Literal("Trade Color")
+        description = Literal("The color of the Skyblock trade overlay.")
     }
 
     val alwaysPrideMonth by boolean("always_pride_month", false) {

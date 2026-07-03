@@ -11,7 +11,7 @@ The project aims to provide a lightweight, intuitive way to interact with common
 * [x] Friend requests
 * [x] Party invites
 * [ ] Guild invites
-* [ ] SkyBlock trade requests
+* [x] SkyBlock trade requests
 * [ ] Duel requests
 * [x] Trophy Fish GG prompt
 * [ ] Auto requeue into a dungeon
