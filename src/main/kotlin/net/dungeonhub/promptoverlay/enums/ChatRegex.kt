@@ -19,7 +19,7 @@ import net.minecraft.network.chat.HoverEvent
 enum class ChatRegex(val regex: Regex, val action: (message: Component, result: MatchResult) -> Unit) {
     AbiphoneCall(Regex("✆ RING... RING... RING..."), action={ message, _ ->
         val command = findClickCommand(message) { it.contains("[PICK UP]") }
-        val caller = extractAbiphoneCaller()
+        val caller = extractAbiphoneCaller()?.let(this::formatMessageWithColor)
 
         if(command != null) {
             OverlayFeature.setOverlay(AbiphoneCallOverlay(caller, command))
@@ -180,15 +180,28 @@ enum class ChatRegex(val regex: Regex, val action: (message: Component, result: 
          *
          * @return The caller's name, or null if not found
          */
-        private fun extractAbiphoneCaller(): String? {
+        private fun extractAbiphoneCaller(): Component? {
             val callerPattern = Regex("✆ (.+) (§e)?✆")
-            val recentMessage = ChatHandler.findInHistory(5) { message ->
+            val recentMessage = ChatHandler.findInHistory(25) { message ->
                 callerPattern.containsMatchIn(message)
-            }
+            } ?: return null
 
-            return recentMessage?.let { msg ->
-                callerPattern.find(msg.string)?.groups?.get(1)?.value
+            val siblings = recentMessage.siblings.filter { it.siblings.isEmpty() }
+
+            val callerName = siblings.firstOrNull { it.string.replace("✆", "").isNotBlank() }
+
+            return callerName?.let {
+                Component.literal(it.string.replace("✆", "").trim()).withStyle(callerName.style)
+            } ?: recentMessage.let { msg ->
+                callerPattern.find(msg.string)?.groups?.get(1)?.value?.let(Component::literal)
             }
+        }
+
+        private fun formatMessageWithColor(component: Component): String {
+            val color = component.style.color?.serialize()
+            val legacyFormatting = ChatFormatting.getByName(color)
+
+            return (legacyFormatting?.toString() ?: "") + component.string
         }
     }
 }

@@ -16,6 +16,6 @@ class AbiphoneCallOverlay(caller: String?, val acceptCommand: String) : Acceptab
     }
 
     override val borderColor get() = Color(OverlayCategory.abiphoneColor)
-    override val message = "Accept the call${if (caller != null) " from $caller§r" else ""}?"
+    override val message = "Incoming call${if (caller != null) " from $caller" else ""}"
     override val firstText get() = "[${acceptKey()}] Accept"
 }
