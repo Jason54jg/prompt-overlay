@@ -7,6 +7,7 @@ import net.dungeonhub.promptoverlay.api.render.Overlay
 import net.dungeonhub.promptoverlay.config.Config
 import net.dungeonhub.promptoverlay.feature.ChatHandler
 import net.dungeonhub.promptoverlay.feature.OverlayFeature
+import net.dungeonhub.promptoverlay.feature.ScheduleHandler
 import net.dungeonhub.promptoverlay.overlays.FriendRequestOverlay
 import net.dungeonhub.promptoverlay.service.KeyMappingService
 import net.fabricmc.api.ClientModInitializer
@@ -58,6 +59,7 @@ object PromptOverlay : ClientModInitializer, OverlayHandler {
         KeyMappingService.init()
         OverlayFeature.init()
         ChatHandler.init()
+        ScheduleHandler.init()
         PromptOverlayApi.registerOverlayHandler(this)
     }
 
