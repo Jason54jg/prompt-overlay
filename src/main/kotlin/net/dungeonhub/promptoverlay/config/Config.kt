@@ -5,6 +5,7 @@ import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import net.dungeonhub.promptoverlay.PromptOverlay
 import net.dungeonhub.promptoverlay.PromptOverlay.MOD_ID
 import net.dungeonhub.promptoverlay.config.categories.DevCategory
+import net.dungeonhub.promptoverlay.config.categories.FeaturesCategory
 import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.minecraft.util.Util
 
@@ -52,6 +53,7 @@ object Config : ConfigKt("$MOD_ID/config") {
     }
 
     init {
+        category(FeaturesCategory)
         category(OverlayCategory)
         category(DevCategory)
     }

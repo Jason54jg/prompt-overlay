@@ -30,6 +30,11 @@ object OverlayCategory : CategoryKt("overlay") {
         description = Literal("The color of the catacombs requeue overlay.")
     }
 
+    val darkAuctionColor by color("dark_auction_warp_color", Color.BLACK.rgb) {
+        name = Literal("Dark Auction Color")
+        description = Literal("The color of the dark auction warp overlay.")
+    }
+
     val duelColor by color("duel_color", Color.RED.rgb) {
         name = Literal("Duel Color")
         description = Literal("The color of the duel invite overlay.")
