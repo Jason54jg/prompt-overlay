@@ -33,7 +33,7 @@ object FeaturesCategory : CategoryKt("features") {
         condition = { false }
     }
 
-    val _ignoredContacts by string("ignored_abiphone_contacts", "") {
+    private val _ignoredContacts by string("ignored_abiphone_contacts", "") {
         name = Literal("Ignored abiphone contacts")
         renderer = Identifier.fromNamespaceAndPath(MOD_ID, "ignored_abiphone_contacts_renderer")
     }
