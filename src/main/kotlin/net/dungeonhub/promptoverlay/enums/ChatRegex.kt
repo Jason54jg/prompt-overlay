@@ -81,7 +81,7 @@ enum class ChatRegex(val regex: Regex, val action: (message: Component, result: 
                     if(responses.size == 2) { // TODO support more than two
                         if(ChatFormatting.stripFormatting(texts[0]) == "Yes" && ChatFormatting.stripFormatting(texts[1]) == "No" && isHoppityOptionAccept()) {
                             // This is the hoppity call
-                            OverlayFeature.setOverlay(OptionSelectOverlay(texts[0], commands[0], texts[1], commands[1], "Accept Hoppitys Chocolate Rabbit?"))
+                            OverlayFeature.setOverlay(OptionSelectOverlay(texts[0], commands[0], texts[1], commands[1], "Accept Hoppity's Chocolate Rabbit?"))
                         } else {
                             OverlayFeature.setOverlay(OptionSelectOverlay(texts[0], commands[0], texts[1], commands[1]))
                         }
