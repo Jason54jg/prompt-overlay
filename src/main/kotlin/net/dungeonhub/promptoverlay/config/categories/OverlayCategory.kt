@@ -50,6 +50,11 @@ object OverlayCategory : CategoryKt("overlay") {
         description = Literal("The color of the guild request overlay.")
     }
 
+    val optionSelectColor by color("option_select_color", Color.GRAY.rgb) {
+        name = Literal("Option Select")
+        description = Literal("The color of the generic option select - used in NPC dialogs such as conversations.")
+    }
+
     val partyColor by color("party_color", Color.BLUE.rgb) {
         name = Literal("Party Color")
         description = Literal("The color of the party invite overlay.")

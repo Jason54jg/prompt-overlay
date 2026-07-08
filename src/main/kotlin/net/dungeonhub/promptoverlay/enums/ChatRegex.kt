@@ -8,7 +8,9 @@ import net.dungeonhub.promptoverlay.overlays.CatacombsRequeueOverlay
 import net.dungeonhub.promptoverlay.overlays.DuelInviteOverlay
 import net.dungeonhub.promptoverlay.overlays.FriendRequestOverlay
 import net.dungeonhub.promptoverlay.overlays.GuildRequestOverlay
+import net.dungeonhub.promptoverlay.overlays.OptionSelectOverlay
 import net.dungeonhub.promptoverlay.overlays.PartyInviteOverlay
+import net.dungeonhub.promptoverlay.overlays.SingleOptionSelectOverlay
 import net.dungeonhub.promptoverlay.overlays.SkyblockTradeOverlay
 import net.dungeonhub.promptoverlay.overlays.TrapperHuntOverlay
 import net.dungeonhub.promptoverlay.overlays.TrophyFishGgOverlay
@@ -63,6 +65,31 @@ enum class ChatRegex(val regex: Regex, val action: (message: Component, result: 
             OverlayFeature.setOverlay(GuildRequestOverlay(inviter, guildName))
         }
     }),
+    OptionSelect(Regex("§eSelect an option: "), action={ message, _ ->
+        val optionComponent = findComponent(message) { ChatFormatting.stripFormatting(it.string)?.trim() == "Select an option:" }
+
+        if(optionComponent != null) {
+            val responses = optionComponent.siblings
+
+            if(responses.all { (it.style.clickEvent as? ClickEvent.RunCommand)?.command?.startsWith("/selectnpcoption ") == true }) {
+                val texts = responses.mapNotNull { it.string.trim().replace("[", "").replace("]", "") }
+                val commands = responses.mapNotNull { (it.style.clickEvent as? ClickEvent.RunCommand)?.command }.map { if(it.startsWith("/")) it.substring(1) else it }
+
+                if(responses.size == texts.size && responses.size == commands.size) {
+                    if(responses.size == 2) { // TODO support more than two
+                        if(ChatFormatting.stripFormatting(texts[0]) == "Yes" && ChatFormatting.stripFormatting(texts[1]) == "No" && isHoppityOptionAccept()) {
+                            // This is the hoppity call
+                            OverlayFeature.setOverlay(OptionSelectOverlay(texts[0], commands[0], texts[1], commands[1], "Accept Hoppitys Chocolate Rabbit?"))
+                        } else {
+                            OverlayFeature.setOverlay(OptionSelectOverlay(texts[0], commands[0], texts[1], commands[1]))
+                        }
+                    } else if(responses.size == 1) {
+                        OverlayFeature.setOverlay(SingleOptionSelectOverlay(texts[0], commands[0]))
+                    }
+                }
+            }
+        }
+    }),
     PartyInvite(Regex("(?:\\[.*] )?(?<player>\\S{1,16}) has invited you to join (?:their|(?:\\[.*] ?)?\\w{1,16}'s)? party!"), action={ _, result ->
         val player = result.groups["player"]?.value
 
@@ -87,6 +114,28 @@ enum class ChatRegex(val regex: Regex, val action: (message: Component, result: 
     TrophyFishGg(Regex("§6§lCLICK HERE §eto say §6gg§e!"), action={ _, _ -> OverlayFeature.setOverlay(TrophyFishGgOverlay()) });
 
     companion object {
+        private fun findComponent(component: Component, predicate: (Component) -> Boolean): Component? {
+            if(predicate(component)) return component
+
+            // Traverse siblings
+            for (sibling in component.siblings) {
+                val result = findComponent(sibling, predicate)
+                if (result != null) return result
+            }
+
+            return null
+        }
+
+        private fun isHoppityOptionAccept(): Boolean {
+            // [NPC] Hoppity: ✆ I just got a new Chocolate Rabbit and was wondering if you wanted to buy it.
+            // Select an option: [Yes] [No]
+
+            val callerPattern = Regex("[NPC] Hoppity: ✆ I just got a new Chocolate Rabbit and was wondering if you wanted to buy it.")
+            return ChatHandler.findInHistory(5) { message ->
+                callerPattern.containsMatchIn(ChatFormatting.stripFormatting(message) ?: "")
+            } != null
+        }
+
         /**
          * Traverses a Component tree to find a click command that matches the given predicate.
          *
