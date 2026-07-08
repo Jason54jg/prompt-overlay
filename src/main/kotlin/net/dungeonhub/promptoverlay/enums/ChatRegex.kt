@@ -129,10 +129,7 @@ enum class ChatRegex(val regex: Regex, val action: (message: Component, result: 
         }
 
         private fun isHoppityOptionAccept(): Boolean {
-            // [NPC] Hoppity: ✆ I just got a new Chocolate Rabbit and was wondering if you wanted to buy it.
-            // Select an option: [Yes] [No]
-
-            val callerPattern = Regex("""\[NPC\] Hoppity: ✆ I just got a new Chocolate Rabbit and was wondering if you wanted to buy it\.""")
+            val callerPattern = Regex("\\[NPC] Hoppity: ✆ I just got a new Chocolate Rabbit and was wondering if you wanted to buy it\\.")
             return ChatHandler.findInHistory(5) { message ->
                 callerPattern.containsMatchIn(ChatFormatting.stripFormatting(message) ?: "")
             } != null
