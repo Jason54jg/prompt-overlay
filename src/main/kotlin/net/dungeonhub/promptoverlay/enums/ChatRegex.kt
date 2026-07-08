@@ -18,6 +18,8 @@ import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.network.chat.contents.PlainTextContents
 
 enum class ChatRegex(val regex: Regex, val action: (message: Component, result: MatchResult) -> Unit) {
     AbiphoneCall(Regex("✆ RING... RING... RING..."), action={ message, _ ->
@@ -66,7 +68,7 @@ enum class ChatRegex(val regex: Regex, val action: (message: Component, result: 
         }
     }),
     OptionSelect(Regex("§eSelect an option: "), action={ message, _ ->
-        val optionComponent = findComponent(message) { ChatFormatting.stripFormatting(it.string)?.trim() == "Select an option:" }
+        val optionComponent = findComponent(message) { ChatFormatting.stripFormatting(((it as? MutableComponent)?.contents as? PlainTextContents.LiteralContents)?.text)?.trim() == "Select an option:" }
 
         if(optionComponent != null) {
             val responses = optionComponent.siblings
