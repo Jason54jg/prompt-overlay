@@ -4,6 +4,7 @@ import net.dungeonhub.promptoverlay.api.render.AcceptableOverlay
 import net.dungeonhub.promptoverlay.api.render.OneActionOverlay
 import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import java.awt.Color
 
 class SingleOptionSelectOverlay(
@@ -12,7 +13,7 @@ class SingleOptionSelectOverlay(
     messageOverride: String? = null
 ): AcceptableOverlay, OneActionOverlay {
     override val borderColor: Color = Color(OverlayCategory.optionSelectColor)
-    override val message: String = messageOverride ?: "Select an option"
+    override val message = Component.literal(messageOverride ?: "Select an option")
 
     override fun accept() {
         Minecraft.getInstance().execute {

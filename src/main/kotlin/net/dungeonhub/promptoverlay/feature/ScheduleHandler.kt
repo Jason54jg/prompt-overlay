@@ -31,7 +31,7 @@ object ScheduleHandler {
             delay(timeUntilDarkAuction() - FeaturesCategory.darkAuctionTime.seconds)
 
             if(Minecraft.getInstance().level != null && FeaturesCategory.showDarkAuctionWarp) {
-                OverlayFeature.setOverlay(DarkAuctionWarpOverlay())
+                OverlayFeature.setOverlay(DarkAuctionWarpOverlay(FeaturesCategory.darkAuctionTime.seconds))
             }
 
             delay(FeaturesCategory.darkAuctionTime.seconds)

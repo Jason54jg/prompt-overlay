@@ -6,6 +6,7 @@ import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.dungeonhub.promptoverlay.service.KeyMappingService
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import java.awt.Color
 
 class SkyblockTradeOverlay(trader: String, val acceptCommand: String): AcceptableOverlay, OneActionOverlay {
@@ -18,7 +19,7 @@ class SkyblockTradeOverlay(trader: String, val acceptCommand: String): Acceptabl
     }
 
     override val borderColor: Color get() = Color(OverlayCategory.tradeColor)
-    override val message: String = "${ChatFormatting.stripFormatting(trader)} sent you a trade request"
+    override val message = Component.literal("${ChatFormatting.stripFormatting(trader)} sent you a trade request")
 
     override val firstText: String
         get() {

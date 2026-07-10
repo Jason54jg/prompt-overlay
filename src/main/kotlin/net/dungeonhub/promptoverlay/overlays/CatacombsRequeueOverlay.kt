@@ -4,6 +4,7 @@ import net.dungeonhub.promptoverlay.api.render.AcceptableOverlay
 import net.dungeonhub.promptoverlay.api.render.OneActionOverlay
 import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import java.awt.Color
 
 class CatacombsRequeueOverlay(val floor: String) : AcceptableOverlay, OneActionOverlay {
@@ -15,6 +16,6 @@ class CatacombsRequeueOverlay(val floor: String) : AcceptableOverlay, OneActionO
     }
 
     override val borderColor get() = Color(OverlayCategory.catacombsRequeueColor)
-    override val message get() = "Requeue into $floor?"
+    override val message get() = Component.literal("Requeue into $floor?")
     override val firstText get() = "[${acceptKey()}] Requeue"
 }

@@ -5,6 +5,7 @@ import net.dungeonhub.promptoverlay.api.render.OneActionOverlay
 import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.dungeonhub.promptoverlay.service.KeyMappingService
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import java.awt.Color
 
 class GuildRequestOverlay(val inviter: String, guildName: String?) : AcceptableOverlay, OneActionOverlay {
@@ -15,7 +16,7 @@ class GuildRequestOverlay(val inviter: String, guildName: String?) : AcceptableO
     }
 
     override val borderColor: Color = Color(OverlayCategory.guildColor)
-    override val message: String = "$inviter invited you into their guild${if (guildName != null) " $guildName" else ""}"
+    override val message = Component.literal("$inviter invited you into their guild${if (guildName != null) " $guildName" else ""}")
 
     override val firstText: String
         get() {

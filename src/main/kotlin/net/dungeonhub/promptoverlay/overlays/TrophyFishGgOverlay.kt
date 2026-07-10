@@ -5,6 +5,7 @@ import net.dungeonhub.promptoverlay.api.render.OneActionOverlay
 import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.dungeonhub.promptoverlay.service.KeyMappingService
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import java.awt.Color
 
 class TrophyFishGgOverlay: AcceptableOverlay, OneActionOverlay {
@@ -15,7 +16,7 @@ class TrophyFishGgOverlay: AcceptableOverlay, OneActionOverlay {
     }
 
     override val borderColor: Color = Color(OverlayCategory.trophyFishColor)
-    override val message: String = "Congratulate for a rare drop"
+    override val message = Component.literal("Congratulate for a rare drop")
     override val firstText: String
         get() {
             val acceptKeyName = KeyMappingService.acceptKey.translatedKeyMessage.string

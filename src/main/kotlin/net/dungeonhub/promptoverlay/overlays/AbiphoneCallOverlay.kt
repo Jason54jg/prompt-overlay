@@ -4,6 +4,7 @@ import net.dungeonhub.promptoverlay.api.render.AcceptableOverlay
 import net.dungeonhub.promptoverlay.api.render.OneActionOverlay
 import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import java.awt.Color
 
 class AbiphoneCallOverlay(caller: String?, val acceptCommand: String) : AcceptableOverlay, OneActionOverlay {
@@ -16,6 +17,6 @@ class AbiphoneCallOverlay(caller: String?, val acceptCommand: String) : Acceptab
     }
 
     override val borderColor get() = Color(OverlayCategory.abiphoneColor)
-    override val message = "Incoming call${if (caller != null) " from $caller" else ""}"
+    override val message = Component.literal("Incoming call${if (caller != null) " from $caller" else ""}")
     override val firstText get() = "[${acceptKey()}] Accept"
 }

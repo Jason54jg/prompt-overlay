@@ -6,11 +6,12 @@ import net.dungeonhub.promptoverlay.api.render.TwoActionsOverlay
 import net.dungeonhub.promptoverlay.config.categories.OverlayCategory
 import net.dungeonhub.promptoverlay.service.KeyMappingService
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 import java.awt.Color
 
 class FriendRequestOverlay(val from: String): AcceptableOverlay, DeniableOverlay, TwoActionsOverlay {
     override val borderColor: Color = Color(OverlayCategory.friendColor)
-    override val message: String = "Friend request from $from"
+    override val message = Component.literal("Friend request from $from")
 
     override fun accept() {
         Minecraft.getInstance().execute {
