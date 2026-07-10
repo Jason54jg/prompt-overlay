@@ -20,7 +20,7 @@ object ChatHandler {
     fun handle(message: Component) {
         addToHistory(message)
 
-        for(regex in ChatRegex.entries) {
+        for(regex in ChatRegex.entries.filter { it.enabled() }) {
             val result = regex.regex.find(message.string) ?: continue
 
             regex.action(message, result)

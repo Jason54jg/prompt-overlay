@@ -9,6 +9,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toKotlinLocalDateTime
 import net.dungeonhub.promptoverlay.config.categories.FeaturesCategory
+import net.dungeonhub.promptoverlay.config.categories.FeaturesToggle
 import net.dungeonhub.promptoverlay.overlays.DarkAuctionWarpOverlay
 import net.minecraft.client.Minecraft
 import java.util.concurrent.Executors
@@ -20,7 +21,7 @@ object ScheduleHandler {
     private val supervisor = SupervisorJob()
     private val dispatcher = Executors.newFixedThreadPool(2).asCoroutineDispatcher()
 
-    private val scheduler = CoroutineScope(supervisor + dispatcher)
+    val scheduler = CoroutineScope(supervisor + dispatcher)
 
     fun init() {
         launchDarkAuctionPrompt()
@@ -30,7 +31,7 @@ object ScheduleHandler {
         scheduler.launch {
             delay(timeUntilDarkAuction() - FeaturesCategory.darkAuctionTime.seconds)
 
-            if(Minecraft.getInstance().level != null && FeaturesCategory.showDarkAuctionWarp) {
+            if(Minecraft.getInstance().level != null && FeaturesToggle.darkAuctionWarp) {
                 OverlayFeature.setOverlay(DarkAuctionWarpOverlay(FeaturesCategory.darkAuctionTime.seconds))
             }
 

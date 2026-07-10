@@ -17,13 +17,14 @@ object FeaturesCategory : CategoryKt("features") {
     override val name: TranslatableValue
         get() = Literal("Features")
 
-    val showDarkAuctionWarp by boolean("show_dark_auction_warp", true) {
-        name = Literal("Dark Auction Warp")
-        description = Literal("Show the Dark Auction Warp reminder.")
+    init {
+        obj("feature_toggles", FeaturesToggle) {
+            name = Literal("Toggle Features")
+        }
     }
 
     val darkAuctionTime by int("dark_auction_notification_time", 15) {
-        name = Literal("Notification time")
+        name = Literal("DA Notification time")
         description = Literal("Change how many seconds before the dark auction you'll be notified.")
         range = 5..60
         slider = true
