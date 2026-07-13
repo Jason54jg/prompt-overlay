@@ -93,7 +93,7 @@ enum class ChatRegex(val regex: Regex, val enabled: () -> Boolean = { true }, va
             OverlayFeature.setOverlay(SingleOptionSelectOverlay(texts[0], commands[0]))
         }
     }),
-    PartyInvite(Regex("(?:\\[.*] )?(?<player>\\S{1,16}) has invited you to join (?:their|(?:\\[.*] ?)?\\w{1,16}'s)? party!"), FeaturesToggle::partyInvites, action=action@{ _, result ->
+    PartyInvite(Regex("\n(?:\\[.*] )?(?<player>\\S{1,16}) has invited you to join (?:their|(?:\\[.*] ?)?\\w{1,16}'s)? party!"), FeaturesToggle::partyInvites, action=action@{ _, result ->
         val player = result.groups["player"]?.value ?: return@action
 
         OverlayFeature.setOverlay(PartyInviteOverlay(player))
