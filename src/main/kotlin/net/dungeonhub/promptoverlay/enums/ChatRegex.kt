@@ -13,18 +13,21 @@ import net.dungeonhub.promptoverlay.overlays.DuelInviteOverlay
 import net.dungeonhub.promptoverlay.overlays.FriendRequestOverlay
 import net.dungeonhub.promptoverlay.overlays.GuildRequestOverlay
 import net.dungeonhub.promptoverlay.overlays.OptionSelectOverlay
+import net.dungeonhub.promptoverlay.overlays.PartyCommandOverlay
 import net.dungeonhub.promptoverlay.overlays.PartyInviteOverlay
 import net.dungeonhub.promptoverlay.overlays.SingleOptionSelectOverlay
 import net.dungeonhub.promptoverlay.overlays.SkyblockTradeOverlay
 import net.dungeonhub.promptoverlay.overlays.TrapperHuntOverlay
 import net.dungeonhub.promptoverlay.overlays.TrapperRestartOverlay
 import net.dungeonhub.promptoverlay.overlays.TrophyFishGgOverlay
+import net.dungeonhub.promptoverlay.util.MessageUtil.sendDebug
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.chat.contents.PlainTextContents
+import org.slf4j.LoggerFactory
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
@@ -93,6 +96,19 @@ enum class ChatRegex(val regex: Regex, val enabled: () -> Boolean = { true }, va
             OverlayFeature.setOverlay(SingleOptionSelectOverlay(texts[0], commands[0]))
         }
     }),
+    PartyCommand(Regex("§9Party §8> §.(\\[.*] )?(?<player>\\w{1,16})§.: !(?<command>\\S+)$"), FeaturesToggle::partyCommands, action=action@{ _, result ->
+        val player = result.groups["player"]?.value ?: return@action
+        val command = result.groups["command"]?.value ?: return@action
+
+        val partyCommand = PartyCommandOverlay.PartyCommand.getCommand(command)
+
+        if(partyCommand == null) {
+            logger.sendDebug("Unknown party command received, ignoring it: $command")
+            return@action
+        }
+
+        OverlayFeature.setOverlay(PartyCommandOverlay(player, partyCommand))
+    }),
     PartyInvite(Regex("\n(?:\\[.*] )?(?<player>\\S{1,16}) has invited you to join (?:their|(?:\\[.*] ?)?\\w{1,16}'s)? party!"), FeaturesToggle::partyInvites, action=action@{ _, result ->
         val player = result.groups["player"]?.value ?: return@action
 
@@ -124,6 +140,8 @@ enum class ChatRegex(val regex: Regex, val enabled: () -> Boolean = { true }, va
     TrophyFishGg(Regex("§6§lCLICK HERE §eto say §6gg§e!"), FeaturesToggle::trophyFishGg, action={ _, _ -> OverlayFeature.setOverlay(TrophyFishGgOverlay()) });
 
     companion object {
+        private val logger = LoggerFactory.getLogger(PartyCommandOverlay::class.java)
+
         var lastTrapperQuest: Instant? = null
 
         private fun findComponent(component: Component, predicate: (Component) -> Boolean): Component? {

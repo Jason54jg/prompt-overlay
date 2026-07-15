@@ -33,6 +33,11 @@ object FeaturesToggle : ObjectKt() {
         description = Literal("This currently only supports up to 2 options, so don't freak out if some dialogs aren't getting recognized")
     }
 
+    // TODO make a toggle per command possible
+    val partyCommands by boolean("show_party_commands", true) {
+        name = Literal("Party Commands")
+    }
+
     val partyInvites by boolean("show_party_invites", true) {
         name = Literal("Party Invites")
     }
