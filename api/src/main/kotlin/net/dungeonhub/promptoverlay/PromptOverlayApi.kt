@@ -47,7 +47,7 @@ object PromptOverlayApi {
             } else {
                 logger.error("The Prompt Overload mod is installed, but no overlay handler is registered. Please update your mod.")
                 Minecraft.getInstance().execute {
-                    Minecraft.getInstance().gui.chat.addClientSystemMessage(Component.literal(
+                    Minecraft.getInstance().gui.hud.chat.addClientSystemMessage(Component.literal(
                         "An error occurred while a mod tried to set an overlay - no overlay handler is registered. Please update your mods."
                     ).withStyle(ChatFormatting.RED))
                 }

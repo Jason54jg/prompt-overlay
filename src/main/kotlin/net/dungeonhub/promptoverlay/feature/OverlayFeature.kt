@@ -100,7 +100,7 @@ object OverlayFeature {
 
         val minecraft = net.minecraft.client.Minecraft.getInstance()
 
-        if (minecraft.options.hideGui) return
+        if (minecraft.gui.hud.isHidden) return
 
         val font = minecraft.font
         val window = minecraft.window

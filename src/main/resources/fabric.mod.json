@@ -34,7 +34,7 @@
     "fabric-language-kotlin": ">=${kotlin_loader_version}",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}",
-    "resourcefulconfig": ">=4.0.1"
+    "resourcefulconfig": ">=5.0.0"
   },
   "custom": {
     "modmenu": {

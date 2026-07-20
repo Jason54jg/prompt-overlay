@@ -37,7 +37,7 @@ object PromptOverlay : ClientModInitializer, OverlayHandler {
                 ClientCommands.literal("prompt-overlay")
                     .executes {
                         Minecraft.getInstance().schedule {
-                            Minecraft.getInstance().setScreen(ResourcefulConfigScreen.getFactory(MOD_ID).apply(null))
+                            Minecraft.getInstance().setScreenAndShow(ResourcefulConfigScreen.getFactory(MOD_ID).apply(null))
                         }
                         return@executes 1
                     }
